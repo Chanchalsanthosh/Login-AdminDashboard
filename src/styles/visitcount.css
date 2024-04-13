@@ -1,0 +1,51 @@
+
+.visitcount {
+    display: flex; /* Make the container a flexbox for horizontal arrangement */
+    flex-wrap: wrap;
+    margin-top: 0%; /* Allow cards to wrap to the next line if needed */
+    
+  }
+  
+  .visitcount .vcard {
+    margin: 10px;  /* Maintain spacing between cards */
+    padding: 15px;  /* Padding for content within cards */
+     /* Black border as specified */
+    background-color: #ebbf23; /* Light gray background color, slightly darker */
+    border-radius: 5px;  /* Rounded corners */
+    text-align: center;
+    gap: 2%;
+    width: 170px; /* Adjust width as needed */
+    display: flex;  /* Make card itself a flexbox for icon & content */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Subtle box shadow for depth */
+  }
+  
+  .visitcount .vcard .icons {
+    font-size: 30px;
+    border-radius: 50%;
+     /* White border around icon */
+    padding: 4%;
+    width: max-content;
+    height: max-content;
+    margin-left: -5%;
+    margin-top: 5%;
+    background-color:transparent;
+    backdrop-filter: blur;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Apply a box shadow */
+    transition: box-shadow 0.3s ease; /* Light gray background for icon area */
+  }
+  
+  .visitcount .vcard .content {
+    display: block;
+    padding: 2%;
+    margin-left: 0%;
+  }
+  
+  .visitcount .vcard h4 {
+    margin-bottom: 5px;
+    font-size: 18px;
+  }
+  
+  .visitcount .vcard p{
+    font-size: 30px;
+    font-weight: bolder;
+  }

@@ -1,0 +1,43 @@
+
+#chart{
+    display:flex;
+    gap: 2%;
+    margin-top:5%;
+
+}
+#chart .chart1{
+    width:50%;
+    box-sizing: border-box;
+    transition: box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    
+}
+
+#chart .chart2{
+    width:50%;
+    box-sizing: border-box;
+    transition: box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin-left: 2%;
+    
+ 
+}
+#chart .chart2 h2{
+    margin-left: 2%;
+}
+#chart .chart1 h1{
+    margin-left: 2%;
+}
+.chart1:hover, .chart2:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    transform: scale(1.05);
+}
+@media (max-width: 768px) {
+    #chart {
+        flex-direction: column;
+    }
+
+    .chart1, .chart2 {
+        width: 100%;
+    }
+}
