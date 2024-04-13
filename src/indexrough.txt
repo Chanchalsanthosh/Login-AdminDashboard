@@ -1,0 +1,123 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+import { AuthProvider } from './context/AuthProvider';
+import {
+  createBrowserRouter,
+  RouterProvider,
+} from "react-router-dom";
+
+
+import Home from "./pages/Home"
+const router = createBrowserRouter([
+  {
+    path: "/home",
+    element: <Home/>,
+  }
+]);
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+     <AuthProvider>  
+     <RouterProvider router={router}/>  
+      <App />
+      </AuthProvider>
+
+  </React.StrictMode>
+);
+
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+
+
+
+login.jsx
+
+import React, { useState, useRef, useEffect, useContext } from 'react';
+import { FaUser } from "react-icons/fa6";
+import { FaLock } from "react-icons/fa";
+import { AuthContext } from "./context/AuthProvider"
+import axios from './api/axios';
+import {Navigate} from 'react-router-dom';
+
+
+
+
+
+const Login = () => {
+    const userRef = useRef();
+    const pwdRef = useRef();
+    const { setAuth } = useContext(AuthContext);
+    
+
+    const [user, setUser] = useState('');
+    const [pwd, setPwd] = useState('');
+    const [errMsg, setErrMsg] = useState('');
+    const [success, setSuccess] = useState(false);
+
+    useEffect(() => {
+        userRef.current.focus();
+    }, []);
+
+    useEffect(() => {
+        setErrMsg('');
+    }, [user, pwd]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('/login', { username: user, password: pwd }); // Use Axios instead of fetch
+            if (response.status === 200) {
+                const data = response.data;
+                setSuccess(true);
+                setAuth(data.token);
+                return <Navigate to ="/home"/>
+               
+            } else {
+                setErrMsg(response.data.error);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            setErrMsg('An error occurred. Please try again.');
+        }
+    };
+
+    return (
+        <>
+            {success ? (
+              
+                     <Navigate to ="/home"/>
+                
+            ) : (
+                <div id='login1'>
+                    <section className='wrapper1'>
+                        <p className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
+
+                        <div className='wrapper'>
+                            <form onSubmit={handleSubmit} action="">
+                                <h1>Login</h1>
+                                <div className='input-box'>
+                                    <input type="text" placeholder="Username" ref={userRef} autoComplete="off" onChange={(e) => setUser(e.target.value)} value={user} required />
+                                    <FaUser />
+                                </div>
+                                <div className='input-box'>
+                                    <input type="password" placeholder="Password" ref={pwdRef} onChange={(e) => setPwd(e.target.value)} value={pwd} required />
+                                    <FaLock />
+                                </div>
+                                <button type="submit" onClick={handleSubmit}>Login</button>
+                            </form>
+                        </div>
+                    </section>
+                </div>
+            )}
+        </>
+    )
+}
+
+export default Login;
+
+
+
