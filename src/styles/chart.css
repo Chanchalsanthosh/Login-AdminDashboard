@@ -22,22 +22,32 @@
     
  
 }
+#chart .chart1 h2{
+    margin-left: 2%;
+    margin-bottom: 2%;
+}
 #chart .chart2 h2{
     margin-left: 2%;
+    margin-bottom: 2%;
 }
-#chart .chart1 h1{
-    margin-left: 2%;
+#chart .chart1, .chart2 , BarChart{
+      width:fit-content;
 }
+#chart .chart2, .chart1 , BarChart{
+    width:fit-content;
+}
+
 .chart1:hover, .chart2:hover {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     transform: scale(1.05);
 }
-@media (max-width: 768px) {
+@media (max-width: 899px) {
     #chart {
+        display: flex;
         flex-direction: column;
+        
     }
-
-    .chart1, .chart2 {
-        width: 100%;
+    #chart .chart2{
+        margin-top:5%;
     }
 }

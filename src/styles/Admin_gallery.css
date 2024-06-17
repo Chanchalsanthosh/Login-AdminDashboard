@@ -1,0 +1,126 @@
+/* Style for the container */
+/* Style for the container */
+#gmain {
+    width: 100%;
+    display: block;
+    padding: 20px;
+    box-sizing: border-box;
+   
+}
+
+/* Style for the Add Image section */
+#gmain .addimage {
+    margin-bottom: 20px;
+    width: 30%;
+    align-items: center;
+    justify-content: center;
+    margin-left:10%;
+   
+}
+/* Style for the form */
+#gmain .addimage form {
+    width: 500px; /* Adjust width as needed */
+    max-width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    justify-content: space-between;
+
+}
+
+/* Style for the Choose File label */
+#gmain .addimage form label {
+    margin-right: 10px;
+    font-weight: bold;
+    color:black;
+}
+
+/* Style for the file input */
+#gmain .addimage form input[type="file"] {
+    flex: 1;
+    margin-right: 10px;
+}
+
+/* Style for the Upload and Cancel buttons */
+
+/* Style for the Cancel button */
+#gmain .addimage form .btng{
+    display: flex;
+    padding: 8px 12px;
+    gap:2%;
+}
+#gmain .addimage form .btng button.cancel-btn {
+    background-color: #5E1675;
+    color: #fff;
+}
+
+/* Hover effect for buttons */
+
+#gmain .addimage form  .btng button.upload-btn {
+    background-color: #5E1675;
+    color: #fff;
+}
+
+/* Hover effect for buttons */
+
+
+/* Style for the Image Container */
+#gmain .viewimage {
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+/* Style for each card */
+.gimage {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #f4efef;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    align-self: flex-start;
+    
+     /* Adjust width as needed */
+    background-color: #fff;
+    box-sizing: border-box; /* Include padding and border in the width calculation */
+}
+
+/* Style for the image */
+.gimage img {
+    width:100%;
+    height: 200px;
+    margin-right: 5%;
+    margin-left: 2%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Style for the delete button */
+.gimage button {
+    background-color: #5E1675;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    
+    box-sizing: border-box; /* Include padding and border in the width calculation */
+}
+
+.gimage button:hover {
+    background-color: #EEBD3B;
+    color:black;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    .gimage {
+        width: calc(50% - 20px); /* Adjust width as needed for smaller screens */
+    }
+}

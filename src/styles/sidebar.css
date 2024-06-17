@@ -1,14 +1,14 @@
 .wholeside{
     background: linear-gradient(rgb(22 24 39), rgb(10 11 18));
-  
-    height:800px;
     width:212px;
+    height:100%;
+    
   }
   
   
   .side{
     margin-top: 22px;
-    width:20%;
+    width:100%;
     float:left;
     height:100%;
     margin-left: 20px;

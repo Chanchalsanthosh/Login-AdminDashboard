@@ -1,0 +1,13 @@
+#gallery {
+    display: flex;
+    align-items: flex-start;
+    
+ 
+}
+
+
+#gallery .gleft {
+    
+    margin-top: -10px;
+    flex: 1; /* Add this to make the left section take up remaining space */
+}

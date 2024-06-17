@@ -1,0 +1,276 @@
+/* admin.css */
+
+.annmain {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.annmain .side {
+  
+    width:20%;
+    height: 100%;
+   
+}
+
+.annmain .wholebody {
+  
+  width:80%;
+  margin-left: -5%;
+  
+}
+
+.annmain .wholebody .Announcement_list {
+  margin: 0 auto;
+  width:100%;
+}
+
+.annmain .Announcement_list .head1 {
+  
+  margin-bottom: 20px;
+}
+
+.annmain .Announcement_list .ra {
+  text-align: right;
+  margin-bottom: 10px;
+}
+
+.annmain .Announcement_list .btn2 {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.annmain .Announcement_list .btn2:hover {
+  background-color: #0056b3;
+}
+
+.annmain  .Announcement_list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.annmain .Announcement_list thead {
+  background-color: #f2f2f2;
+}
+
+.annmain th, .annmain td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.annmain th {
+  background-color: #f9f9f9;
+}
+
+
+.annmain .icon1, .annmain .icon2 {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.annmain .icon1:hover {
+  color: red;
+}
+
+.annmain .icon2:hover {
+  color: #007bff;
+}
+
+.annmain .popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.annmain .popup-inner {
+  background: white;
+  padding: 20px;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 8px;
+  position: relative;
+}
+.annmain .popup .popup-inner .icon3{
+  color: black;
+  display: inline;
+}
+.annmain .popup .popup-inner p{
+  color: black;
+}
+
+.annmain .close-btn {
+  position: realtive;
+  top: 10px;
+  right: 10px;
+  background: black;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.annmain form {
+  display: flex;
+  flex-direction: column;
+}
+
+.annmain label {
+  margin-top: 10px;
+  color: black;
+}
+
+.annmain input[type="text"], .annmain textarea, .annmain input[type="file"] {
+  margin-top: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.annmain textarea {
+  resize: vertical;
+}
+
+.annmain .button-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.annmain .cancel-btn, .upload-btn,  .add,  .update-btn {
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.annmain .cancel-btn {
+  background-color: #ccc;
+  color: white;
+  cursor:pointer;
+}
+
+.annmain .cancel-btn:hover {
+  background-color: #999;
+}
+
+.annmain .upload-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.annmain .upload-btn:hover {
+  background-color: #0056b3;
+}
+
+.annmain .add, .annmain .update-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.annmain .add:hover, .annmain .update-btn:hover {
+  background-color: #218838;
+}
+
+.annmain .label {
+  margin-top: 5px;
+  color: #888;
+}
+/* Add this to your admin.css file or a relevant CSS file */
+
+.table-content-cell {
+  max-height: 100px; /* Adjust the height as needed */
+  overflow-y: auto;
+  white-space: pre-wrap; /* This ensures that the text wraps and preserves whitespace */
+  word-break: break-word; /* This breaks long words to fit within the cell */
+}
+
+/* Optional: Add styles to control the table layout and appearance */
+.annmain table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.annmain thead th, tbody td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  
+}
+
+.annmain thead th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
+
+.annmain tbody tr:hover {
+  background-color: #f5f5f5;
+}
+
+
+
+
+
+@media (max-width: 1400px) {
+  .annmain .wholebody {
+  
+    width:80%;
+    margin-left: 0%;
+    
+  }
+
+}
+@media (max-width: 1400px) {
+  .annmain .wholebody {
+  
+    width:80%;
+    margin-left: 5%;
+    
+  }
+} 
+@media (max-width: 840px) {
+  .annmain .wholebody {
+  
+    width:80%;
+    margin-left: 10%;
+    
+  }
+}
+@media (max-width: 768px) {
+  
+    .annmain .wholebody {
+    
+      width:80%;
+      margin-left: 10%;
+      
+    }
+  }
+  @media (max-width: 698px) {
+  
+    .annmain .wholebody {
+    
+      width:80%;
+      margin-left:30%;
+      
+    }
+  }
+  @media (max-width: 425px) {
+  
+    .annmain .wholebody {
+    
+      width:80%;
+      margin-left:50%;
+      
+    }
+  }

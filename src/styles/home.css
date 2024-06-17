@@ -1,7 +1,75 @@
 #adminhome{
     display:flex;
+    width:100%;
+    align-items: flex-start;
 }
 #adminhome .visit{
-    margin-top:-10%;
+   width:80%;
+   display: flex;
+   flex-direction: column;
+   
+
     
 }
+#adminhome .sides{
+    width:20%;
+    height:100%;
+    position: sticky;
+    position:relative;
+}
+@media (max-width: 1200px){
+   #adminhome .visit{
+    margin-left: 10%;
+    width:80%;
+}
+
+}
+@media (max-width: 1000px){
+    #adminhome .visit{
+     margin-left: 20%;
+     width:80%;
+ }
+   
+ }
+ 
+ 
+@media (max-width: 700px){
+    #adminhome .visit{
+     margin-left: 20%;
+     width:80%;
+ }
+    
+   
+ }
+ @media (max-width: 590px){
+    #adminhome .visit{
+     margin-left: 30%;
+     width:80%;
+ }
+   
+ }
+ @media (max-width: 499px){
+    #adminhome .visit{
+     margin-left: 40%;
+     width:100%;
+ }
+ 
+   
+ 
+ }
+ @media (max-width: 418px){
+    #adminhome .visit{
+     margin-left: 60%;
+     width:80%;
+ }
+   
+ 
+ }
+ @media (max-width: 378px){
+    #adminhome .visit{
+     margin-left: 90%;
+     width:80%;
+ }
+ 
+ }
+ 
