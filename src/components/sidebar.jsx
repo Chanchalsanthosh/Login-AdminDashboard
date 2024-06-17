@@ -65,6 +65,18 @@ function Sidebar({openSidebarToggle, OpenSidebar}) {
                  </Link>
             </li>
             <li className='sidebar-list-item'>
+            <FontAwesomeIcon icon={faChalkboardTeacher}  style={{ color: 'rgb(87 13 147)' }}/>
+             <Link to="/adincubate">
+                 Incubatees
+                 </Link>
+            </li>
+            <li className='sidebar-list-item'>
+            <FontAwesomeIcon icon={faChalkboardTeacher}  style={{ color: 'rgb(87 13 147)' }}/>
+             <Link to="/adsubcribers">
+                 Subscribers
+                 </Link>
+            </li>
+            <li className='sidebar-list-item'>
             <BiLogOut icon={faChartSimple}  style={{ color: 'rgb(87 13 147)' }}/>
              <Link to="/logout">
                  Logout
