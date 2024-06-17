@@ -5,32 +5,27 @@ import { firestore, storage } from '../components/firebase';
 import { getDocs, collection, deleteDoc, query, where, doc, updateDoc, addDoc } from '@firebase/firestore';
 import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import '../styles/admin.css';
 
-const AdEvents = () => {
-    const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
+function AdAnnouncemnts() {
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [isEditPopupOpen, setIsEditPopupOpen] = useState(false);
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
+    const [selectedFile, setSelectedFile] = useState(null);
     const [url, setUrl] = useState('');
     const [imageUpload, setImageUpload] = useState(null);
     const [numDocuments, setNumDocuments] = useState(0);
-    const [Events, setEvents] = useState([]);
+    const TitleRef2 = useRef();
+    const bodyRef2 = useRef();
+    const TitleRef = useRef();
+    const bodyRef = useRef();
+    const fileRef = useRef();
+    const [Anns, setAnns] = useState([]);
     const [existingData, setExistingData] = useState(null);
     const [file, setFile] = useState(null);
-
-    const DateRef2 = useRef();
-    const NameRef2 = useRef();
-    const ReglinkRef2 = useRef();
-    const VenueRef2 = useRef();
-    const descRef2 = useRef();
-
-    const DateRef = useRef();
-    const NameRef = useRef();
-    const ReglinkRef = useRef();
-    const VenueRef = useRef();
-    const descRef = useRef();
 
     const uploadImage = () => {
         if (!imageUpload) {
@@ -39,7 +34,7 @@ const AdEvents = () => {
         }
 
         const uniqueFilename = uuidv4() + '-' + imageUpload.name;
-        const imageRef = storageRef(storage, `EventData/${uniqueFilename}`);
+        const imageRef = storageRef(storage, `AnnouncementData/${uniqueFilename}`);
 
         uploadBytes(imageRef, imageUpload)
             .then(() => {
@@ -63,7 +58,7 @@ const AdEvents = () => {
 
     const fetchNumDocuments = async () => {
         try {
-            const querySnapshot = await getDocs(collection(firestore, "Events"));
+            const querySnapshot = await getDocs(collection(firestore, "Announcements"));
             setNumDocuments(querySnapshot.size);
         } catch (error) {
             console.error("Error getting documents: ", error);
@@ -78,36 +73,43 @@ const AdEvents = () => {
         e.preventDefault();
         fetchNumDocuments();
         const data = {
-            Date: new Date(DateRef2.current.value),
-            Name: NameRef2.current.value,
-            Reglink: ReglinkRef2.current.value,
-            Venue: VenueRef2.current.value,
-            desc: descRef2.current.value,
-            imglink: url,
+            Title: TitleRef2.current.value,
+            body: bodyRef2.current.value,
+            id: numDocuments + 1,
+            filelink: url,
         };
 
         try {
-            await addDoc(collection(firestore, "Events"), data);
-            alert("Event added successfully");
-            setIsAddPopupOpen(false);
-            fetchData();
+            await addDoc(collection(firestore, "Announcements"), data);
+            alert("Announcement added successfully");
+            setIsPopupOpen(false); // Close the popup after adding
+            fetchData(); // Refresh the data
         } catch (error) {
             console.error("Error adding document: ", error);
-            alert("Failed to add event");
+            alert("Failed to add announcement");
         }
     };
 
-    const toggleAddPopup = () => {
-        setIsAddPopupOpen(!isAddPopupOpen);
+    const togglePopup = () => {
+        setIsPopupOpen(!isPopupOpen);
     };
 
-    const closeAddPopup = () => {
-        setIsAddPopupOpen(false);
+    const closePopup = () => {
+        setIsPopupOpen(false);
+        setExistingData(null);
     };
 
     const closeEditPopup = () => {
         setIsEditPopupOpen(false);
         setExistingData(null);
+    };
+
+    const handleTitleChange = (e) => {
+        setTitle(e.target.value);
+    };
+
+    const handleBodyChange = (e) => {
+        setBody(e.target.value);
     };
 
     const handleFileChange = (e) => {
@@ -116,13 +118,14 @@ const AdEvents = () => {
 
     const fetchData = async () => {
         try {
-            const ref = collection(firestore, 'Events');
+            const ref = collection(firestore, 'Announcements');
             const querySnapshot = await getDocs(ref);
             const newData = querySnapshot.docs.map(doc => doc.data());
-            setEvents(newData);
+            const sortedData = newData.sort((a, b) => b.id - a.id);
+            setAnns(sortedData);
         } catch (error) {
             console.error('Error fetching documents', error);
-            alert("Failed to fetch events");
+            alert("Failed to fetch announcements");
         }
     };
 
@@ -130,8 +133,8 @@ const AdEvents = () => {
         fetchData();
     }, []);
 
-    const handleApply = (eve) => {
-        setExistingData(eve);
+    const handleApply = (ann) => {
+        setExistingData(ann);
         setIsEditPopupOpen(true);
         window.scrollTo(0, 0);
     };
@@ -139,49 +142,53 @@ const AdEvents = () => {
     const handleUpdate = async (e) => {
         e.preventDefault();
         try {
-            const q = query(collection(firestore, "Events"), where("desc", "==", existingData.desc));
+            const q = query(collection(firestore, "Announcements"), where("id", "==", existingData.id));
             const querySnapshot = await getDocs(q);
 
             querySnapshot.forEach(async (document) => {
-                const docRef = doc(firestore, "Events", document.id);
+                const docRef = doc(firestore, "Announcements", document.id);
                 const newData = {
-                    Date: new Date(DateRef.current.value),
-                    Name: NameRef.current.value,
-                    Reglink: ReglinkRef.current.value,
-                    Venue: VenueRef.current.value,
-                    desc: descRef.current.value,
-                    imglink: existingData.imglink,
+                    Title: TitleRef.current.value,
+                    body: bodyRef.current.value,
+                    filelink: existingData.filelink,
                 };
                 if (file) {
-                    const storageReff = storageRef(storage, 'EventData/' + file.name);
+                    const storageReff = storageRef(storage, 'AnnouncementData/' + file.name);
                     await uploadBytes(storageReff, file);
-                    newData.imglink = await getDownloadURL(storageReff);
+                    newData.filelink = await getDownloadURL(storageReff);
                 }
                 await updateDoc(docRef, newData);
-                alert("Event updated successfully");
+                alert("Announcement updated successfully");
                 closeEditPopup();
                 fetchData();
             });
         } catch (error) {
-            console.error("Error updating event: ", error);
-            alert("Failed to update event");
+            console.error("Error updating announcement: ", error);
+            alert("Failed to update announcement");
         }
     };
 
     const handleDelete = async (id) => {
         try {
-            const q = query(collection(firestore, "Events"), where("Name", "==", id));
+            const q = query(collection(firestore, "Announcements"), where("id", "==", id));
             const querySnapshot = await getDocs(q);
 
             querySnapshot.forEach(async (doc) => {
                 await deleteDoc(doc.ref);
             });
 
-            alert("Event deleted successfully");
+            alert("Announcement deleted successfully");
+            const annRef = collection(firestore, "Announcements");
+            const querySnapshot2 = await getDocs(query(annRef, where("id", ">", id)));
+            querySnapshot2.docs.map(doc => {
+                const docRef = doc(firestore, "Announcements", doc.id);
+                const updatedId = doc.data().id - 1;
+                return updateDoc(docRef, { id: updatedId });
+            });
             fetchData();
         } catch (error) {
-            console.error("Error deleting event: ", error);
-            alert("Failed to delete event");
+            console.error("Error deleting announcement: ", error);
+            alert("Failed to delete announcement");
         }
     };
 
@@ -193,30 +200,24 @@ const AdEvents = () => {
                 </div>
                 <div className='wholebody'>
                     <div className='Announcement_list'>
-                        <h1 className='head1'>Events</h1>
+                        <h1 className='head1'>Announcements</h1>
                         <div className='ra'>
-                            <button className='btn2' onClick={toggleAddPopup}>Add</button>
+                            <button className='btn2' onClick={togglePopup}>Add</button>
                         </div>
-                        {isAddPopupOpen && (
+                        {isPopupOpen && (
                             <div className="popup">
                                 <div className="popup-inner">
-                                    <button className="close-btn" onClick={closeAddPopup}>Close</button>
+                                    <button className="close-btn" onClick={closePopup}>Close</button>
                                     <form onSubmit={handleSubmitAdd}>
-                                        <label>Date</label>
-                                        <input type="date" ref={DateRef2} />
-                                        <label>Name</label>
-                                        <textarea ref={NameRef2}></textarea>
-                                        <label>Reglink</label>
-                                        <input type="text" ref={ReglinkRef2} />
-                                        <label>Venue</label>
-                                        <input type="text" ref={VenueRef2} />
-                                        <label>Description</label>
-                                        <input type="text" ref={descRef2} />
+                                        <label>Title</label>
+                                        <input type="text" ref={TitleRef2} />
+                                        <label>Body</label>
+                                        <textarea ref={bodyRef2}></textarea>
                                         <input type="file" id="file-upload" onChange={(event) => setImageUpload(event.target.files[0])} />
                                         <div className="button-group">
-                                            <button type="button" className="cancel-btn" onClick={closeAddPopup}>Cancel</button>
+                                            <button type="button" className="cancel-btn" onClick={closePopup}>Cancel</button>
                                             <button type="button" className="upload-btn" onClick={uploadImage}>Upload</button>
-                                            <label className="label">Upload file before clicking on add </label>
+                                            <label className="label">Upload file before clicking on add</label>
                                         </div>
                                         <button type='submit' className='add'>Add</button>
                                     </form>
@@ -226,49 +227,35 @@ const AdEvents = () => {
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Name</th>
+                                    <th>Title</th>
                                     <th>Description</th>
-                                    <th>Venue</th>
-                                    <th>Date</th>
-                                    <th>Time</th>
-                                    <th>Registration Link</th>
-                                    <th>Image</th>
+                                    <th>Link</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {Events.map((eve, index) => (
+                                {Anns.map((ann, index) => (
                                     <tr key={index}>
-                                        <td>{eve.Name}</td>
-                                        <td>{eve.desc}</td>
-                                        <td>{eve.Venue}</td>
-                                        <td>{eve.Date.toDate().toLocaleDateString()}</td>
-                                        <td>{eve.Date.toDate().toLocaleTimeString()}</td>
-                                        <td>{eve.Reglink && <a style={{ color: "blue" }} href={eve.Reglink}>Register Here</a>}</td>
-                                        <td><img src={eve.imglink} alt="Event" style={{ width: '100px' }} /></td>
+                                        <td>{ann.Title}</td>
+                                        <td>{ann.body}</td>
+                                        <td>{ann.filelink && <a style={{ color: "blue" }} href={ann.filelink}>{ann.Title}</a>}</td>
                                         <td>
-                                            <FontAwesomeIcon icon={faTrash} className='icon1' onClick={() => handleDelete(eve.Name)} />
-                                            <FontAwesomeIcon icon={faPencilAlt} className='icon2' onClick={() => handleApply(eve)} />
+                                            <FontAwesomeIcon icon={faTrash} className='icon1' onClick={() => handleDelete(ann.id)} />
+                                            <FontAwesomeIcon icon={faPencilAlt} className='icon2' onClick={() => handleApply(ann)} />
                                         </td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
-                        {existingData && isEditPopupOpen && (
+                        {isEditPopupOpen && existingData && (
                             <div className="popup">
                                 <div className="popup-inner">
                                     <button className="close-btn" onClick={closeEditPopup}>Close</button>
                                     <form onSubmit={handleUpdate}>
-                                        <label>Date</label>
-                                        <input type="date" ref={DateRef} defaultValue={new Date(existingData.Date.seconds * 1000).toISOString().split('T')[0]} />
-                                        <label>Name</label>
-                                        <textarea ref={NameRef} defaultValue={existingData.Name}></textarea>
-                                        <label>Reglink</label>
-                                        <input type="text" ref={ReglinkRef} defaultValue={existingData.Reglink} />
-                                        <label>Venue</label>
-                                        <input type="text" ref={VenueRef} defaultValue={existingData.Venue} />
-                                        <label>Description</label>
-                                        <input type="text" ref={descRef} defaultValue={existingData.desc} />
+                                        <label>Title</label>
+                                        <input type="text" ref={TitleRef} defaultValue={existingData.Title} />
+                                        <label>Body</label>
+                                        <textarea ref={bodyRef} defaultValue={existingData.body}></textarea>
                                         <input type="file" id="file-upload" onChange={handleFileChange} />
                                         <div className="button-group">
                                             <button type="button" className="cancel-btn" onClick={closeEditPopup}>Cancel</button>
@@ -283,6 +270,6 @@ const AdEvents = () => {
             </div>
         </>
     );
-};
+}
 
-export default AdEvents;
+export default AdAnnouncemnts;
